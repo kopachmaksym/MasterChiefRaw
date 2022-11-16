@@ -1,6 +1,8 @@
 import com.command.*;
+import com.file.FileWorking;
 import com.food.*;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -30,8 +32,8 @@ public class Menu {
 
                     \t\t\t1.Food (show, add, remove)
                     \t\t\t2.Salat(show all, creation, sorting, calories ranging)
-                    \t\t\t3.Read list of salats from file (Not Working)
-                    \t\t\t4.Help (Not Working)
+                    \t\t\t3.Read list of salats from file
+                    \t\t\t4.Help
                     \t\t\t5.Exit
                     """);
             System.out.print("\t\tSelect: ");
@@ -87,7 +89,7 @@ public class Menu {
                 System.out.println("""
 
                         \t\t\tSalat
-                        \t\t\t\t1.Create (Without Recording To File)
+                        \t\t\t\t1.Create
                         \t\t\t\t2.Sort
                         \t\t\t\t3.Find by parameter(calories)
                         \t\t\t\t4.Cancel
@@ -104,6 +106,7 @@ public class Menu {
                 } else if (var == 1) {
                     sal = new Salat(WholeFood.FoodSelect(veg));
                     System.out.println(sal.toString());
+                    FileWorking.FileWriting(sal.toString());
                 } else if (var == 2) {
                     if (sal == null) {
                         System.out.println("You didn't make a salat. First, select the create option.");
@@ -133,79 +136,6 @@ public class Menu {
             }
         }
     }
-
-//    private void VegList(List<Food> list){
-//        /*
-//        List of food
-//         */
-//        for(int i=0;i<list.size();i++){
-//            System.out.printf("\n\t%d.\n%s%n",i+1,list.get(i).toString());
-//        }
-//    }
-//
-//    private List<Food> AddFood(List<Food> veg){
-//        /*
-//        Add new food to List
-//         */
-//        scanner.useLocale(Locale.US);
-//        String name;
-//        double cal;
-//        int type;
-//        do {
-//            System.out.print("\nInsert the name of food: ");
-//            name = scanner.next();
-//            System.out.print("\nInsert the calories in 100 gramm: ");
-//            cal = scanner.nextFloat();
-//            System.out.print("\nInsert the type of food(fruit(1), vegetable(2), topping(3)): ");
-//            type = scanner.nextInt();
-//
-//            switch (type){
-//                case (1): veg.add(new Fruit(name, cal));
-//                case (2): veg.add(new Vegetable(name, cal));
-//                case (3): veg.add(new Topping(name, cal));
-//            }
-//            System.out.println("\nAdd another one(Y/N): ");
-//            name = scanner.next();
-//            while (!name.equals("Y") && !name.equals("N")) {
-//                System.out.println("\nAdd another one(Y/N): ");
-//                name = scanner.next();
-//            }
-//
-//        } while (!name.equals("N"));
-//        return veg;
-//    }
-//
-//    private List<Food> FoodSelect(){
-//        /*
-//        Creating salat from vegetables
-//         */
-//        List<Food> choise = veg;
-//        List<Food> select = new ArrayList<>();
-//        System.out.println("List of not selected food: ");
-//
-//        do {
-//            VegList(choise);
-//            System.out.print("\n\t\tList of selected food(insert '0' to complete the operation): ");
-//            for (Food food : select) {
-//                System.out.print(food.getName() + " ");
-//            }
-//            System.out.print("\n\n\tSelect: ");
-//            int var = scanner.nextInt();
-//            while (var > choise.size() && var < 0) {
-//                System.out.print("\tSelect: ");
-//                var = scanner.nextInt();
-//            }
-//            if (var == 0) {
-//                break;
-//            }
-//            select.add(choise.get((var - 1)));
-//            choise.remove((var - 1));
-//            System.out.println();
-//
-//
-//        } while (choise.size() != 0);
-//        return select;
-//    }
 
     private List<Food> Default(List<Food> veg){
         /*

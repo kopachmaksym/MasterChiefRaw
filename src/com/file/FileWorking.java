@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class FileWorking {
 
-    public void FileWriting(String salat) throws IOException {
+    public static void FileWriting(String salat) throws IOException {
         /*
         Writing new salat to Salats.txt
          */

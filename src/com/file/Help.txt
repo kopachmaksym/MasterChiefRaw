@@ -6,3 +6,13 @@ When you enter the number '2', you go to the submenu, where you can perform vari
 When you enter the number '3', you get a list of created before salats.
 When you enter the number '4', you get a help that can help you understand the program.
 When you enter the number '5', you end the program.
+
+
+	Name: TomatoSalat
+	Weight: 1,000kg
+	Calories: 190,3kcal
+	Food in salat:
+		1. Tomato (0,250kg, 44,3kcal)
+		2. Cucumber (0,250kg, 37,5kcal)
+		3. Lemon Juice (0,500kg, 108,5kcal)
+
