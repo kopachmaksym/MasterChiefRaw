@@ -1,0 +1,43 @@
+
+
+	Name: com.food.Salat
+	Weight: 1,050kg
+	Calories: 603,0kcal
+	Vegetables in salat:
+		1. Tomato (0,250kg, 165,0kcal)
+		2. Cucumber (0,700kg, 315,0kcal)
+		3. Carrot (0,100kg, 123,0kcal)
+
+
+
+
+	Name: Mix
+	Weight: 1,200kg
+	Calories: 834,0kcal
+	Vegetables in salat:
+		1. Cucumber (0,300kg, 135,0kcal)
+		2. Carrot (0,100kg, 123,0kcal)
+		3. Cabbage (0,800kg, 576,0kcal)
+
+
+
+
+	Name: Potion
+	Weight: 1,950kg
+	Calories: 2196,0kcal
+	Vegetables in salat:
+		1. Tomato (0,250kg, 165,0kcal)
+		2. Carrot (0,700kg, 861,0kcal)
+		3. Onion (1,000kg, 1170,0kcal)
+
+
+
+
+	Name: Sl
+	Weight: 1,000kg
+	Calories: 4502,3kcal
+	com.food.Food in salat:
+		1. Tomato (0,250kg, 44,3kcal)
+		2. Cucumber (0,250kg, 37,5kcal)
+		3. Olive Oil (0,500kg, 4420,5kcal)
+

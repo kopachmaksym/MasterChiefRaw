@@ -1,32 +1,24 @@
+import com.command.*;
 import com.food.*;
+
+import java.io.IOException;
 import java.util.*;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     List<Food> veg = new ArrayList<>();
 
-    public Menu(){
-        /*
-        Constructor
-         */
+
+    public void Selection() throws IOException {
+        Database menu = new Database();
+
+        Database developer = new Database(
+                new SalatFileCommand(menu),
+                new HelpCommand(menu),
+                new ExitCommand(menu)
+        );
+
         veg = Default(veg);
-    }
-
-    private List<Food> Default(List<Food> veg){
-        /*
-        Default food for easier using (you don't need to create a lot of new food)
-         */
-        veg.add(new Vegetable("Tomato",17.7));
-        veg.add(new Vegetable("Cucumber",15));
-        veg.add(new Vegetable("Carrot",41.3));
-        veg.add(new Fruit("Apple",52.1));
-        veg.add(new Fruit("Peach",39));
-        veg.add(new Topping("Olive Oil",884.1));
-        veg.add(new Topping("Lemon Juice", 21.7));
-        return veg;
-    }
-
-    public void Selection(){
         /*
         Main menu
          */
@@ -48,19 +40,24 @@ public class Menu {
                 System.out.print("\t\tSelect: ");
                 var = scanner.nextInt();
             }
-            if(var == 5){
-                break;
+
+            /*
+            Submenu
+             */
+            if(var == 5){ //exit
+                developer.exit();
             }
-            else if (var == 1) {
-                        /*
-                        Submenu for food and his operations
-                        */
+            else if (var == 1) { //Open submenu Food
+                /*
+                Submenu for food and his operations
+                */
+                var = 0;
                 System.out.println("""
 
                         \t\t\tFood
                         \t\t\t\t1.Show list
                         \t\t\t\t2.Add new food
-                        \t\t\t\t3.Remove one(Not Working)
+                        \t\t\t\t3.Remove one
                         \t\t\t\t4.Cancel
                         """) ;
                 System.out.print("\t\t\tSelect: ");
@@ -73,16 +70,20 @@ public class Menu {
                     continue;
                 }
                 else if (var == 1) {
-                    VegList(veg);
+                    WholeFood.VegList(veg);
                 }
                 else if (var == 2) {
-                    veg = AddFood(veg);
+                    veg = WholeFood.AddFood(veg);
                 }
+                else {
+                    veg = WholeFood.FoodRemove(veg);
+                }
+
             }
-            else if (var == 2) {
-                        /*
-                        Submenu for salats and his operations
-                        */
+            else if (var == 2) { //Open submenu Salat
+                         /*
+                 Submenu for salats and his operations
+                 */
                 System.out.println("""
 
                         \t\t\tSalat
@@ -91,16 +92,17 @@ public class Menu {
                         \t\t\t\t3.Find by parameter(calories)
                         \t\t\t\t4.Cancel
                         """);
+                var=1;
                 System.out.print("\t\t\tSelect: ");
-                var = scanner.nextInt();
+        var = scanner.nextInt();
                 while (var <= 0 || var > 4) {
                     System.out.print("\t\t\tSelect: ");
-                    var = scanner.nextInt();
+            var = scanner.nextInt();
                 }
                 if (var == 4) {
                     continue;
                 } else if (var == 1) {
-                    sal = new Salat(FoodSelect());
+                    sal = new Salat(WholeFood.FoodSelect(veg));
                     System.out.println(sal.toString());
                 } else if (var == 2) {
                     if (sal == null) {
@@ -123,90 +125,100 @@ public class Menu {
 
                 }
             }
-            else if (var == 3) {
-                        /*
-                        Read file Salats.txt (it contains all saved salats)
-                        */
+            else if (var == 3) { //Open Submenu SalatFile
+                developer.salatFile();
             }
-            else {
-                        /*
-                        Read file Help.txt (it contains documentation of using progmamme)
-                        */
+            else {          //Open Submenu Help
+                developer.help();
             }
         }
     }
 
-    private void VegList(List<Food> list){
+//    private void VegList(List<Food> list){
+//        /*
+//        List of food
+//         */
+//        for(int i=0;i<list.size();i++){
+//            System.out.printf("\n\t%d.\n%s%n",i+1,list.get(i).toString());
+//        }
+//    }
+//
+//    private List<Food> AddFood(List<Food> veg){
+//        /*
+//        Add new food to List
+//         */
+//        scanner.useLocale(Locale.US);
+//        String name;
+//        double cal;
+//        int type;
+//        do {
+//            System.out.print("\nInsert the name of food: ");
+//            name = scanner.next();
+//            System.out.print("\nInsert the calories in 100 gramm: ");
+//            cal = scanner.nextFloat();
+//            System.out.print("\nInsert the type of food(fruit(1), vegetable(2), topping(3)): ");
+//            type = scanner.nextInt();
+//
+//            switch (type){
+//                case (1): veg.add(new Fruit(name, cal));
+//                case (2): veg.add(new Vegetable(name, cal));
+//                case (3): veg.add(new Topping(name, cal));
+//            }
+//            System.out.println("\nAdd another one(Y/N): ");
+//            name = scanner.next();
+//            while (!name.equals("Y") && !name.equals("N")) {
+//                System.out.println("\nAdd another one(Y/N): ");
+//                name = scanner.next();
+//            }
+//
+//        } while (!name.equals("N"));
+//        return veg;
+//    }
+//
+//    private List<Food> FoodSelect(){
+//        /*
+//        Creating salat from vegetables
+//         */
+//        List<Food> choise = veg;
+//        List<Food> select = new ArrayList<>();
+//        System.out.println("List of not selected food: ");
+//
+//        do {
+//            VegList(choise);
+//            System.out.print("\n\t\tList of selected food(insert '0' to complete the operation): ");
+//            for (Food food : select) {
+//                System.out.print(food.getName() + " ");
+//            }
+//            System.out.print("\n\n\tSelect: ");
+//            int var = scanner.nextInt();
+//            while (var > choise.size() && var < 0) {
+//                System.out.print("\tSelect: ");
+//                var = scanner.nextInt();
+//            }
+//            if (var == 0) {
+//                break;
+//            }
+//            select.add(choise.get((var - 1)));
+//            choise.remove((var - 1));
+//            System.out.println();
+//
+//
+//        } while (choise.size() != 0);
+//        return select;
+//    }
+
+    private List<Food> Default(List<Food> veg){
         /*
-        List of food
+        Default food for easier using (you don't need to create a lot of new food)
          */
-        for(int i=0;i<list.size();i++){
-            System.out.printf("\n\t%d.\n%s%n",i+1,list.get(i).toString());
-        }
-    }
-
-    private List<Food> AddFood(List<Food> veg){
-        /*
-        Add new food to List
-         */
-        scanner.useLocale(Locale.US);
-        String name;
-        double cal;
-        int type;
-        do {
-            System.out.print("\nInsert the name of food: ");
-            name = scanner.next();
-            System.out.print("\nInsert the calories in 100 gramm: ");
-            cal = scanner.nextFloat();
-            System.out.print("\nInsert the type of food(fruit(1), vegetable(2), topping(3)): ");
-            type = scanner.nextInt();
-
-            switch (type){
-                case (1): veg.add(new Fruit(name, cal));
-                case (2): veg.add(new Vegetable(name, cal));
-                case (3): veg.add(new Topping(name, cal));
-            }
-            System.out.println("\nAdd another one(Y/N): ");
-            name = scanner.next();
-            while (!name.equals("Y") && !name.equals("N")) {
-                System.out.println("\nAdd another one(Y/N): ");
-                name = scanner.next();
-            }
-
-        } while (!name.equals("N"));
+        veg.add(new Vegetable("Tomato",17.7));
+        veg.add(new Vegetable("Cucumber",15));
+        veg.add(new Vegetable("Carrot",41.3));
+        veg.add(new Fruit("Apple",52.1));
+        veg.add(new Fruit("Peach",39));
+        veg.add(new Topping("Olive Oil",884.1));
+        veg.add(new Topping("Lemon Juice", 21.7));
         return veg;
-    }
-
-    private List<Food> FoodSelect(){
-        /*
-        Creating salat from vegetables
-         */
-        List<Food> choise = veg;
-        List<Food> select = new ArrayList<>();
-        System.out.println("List of not selected food: ");
-
-        do {
-            VegList(choise);
-            System.out.print("\n\t\tList of selected food(insert '0' to complete the operation): ");
-            for (Food food : select) {
-                System.out.print(food.getName() + " ");
-            }
-            System.out.print("\n\n\tSelect: ");
-            int var = scanner.nextInt();
-            while (var > choise.size() && var < 0) {
-                System.out.print("\tSelect: ");
-                var = scanner.nextInt();
-            }
-            if (var == 0) {
-                break;
-            }
-            select.add(choise.get((var - 1)));
-            choise.remove((var - 1));
-            System.out.println();
-
-
-        } while (choise.size() != 0);
-        return select;
     }
 
 }
